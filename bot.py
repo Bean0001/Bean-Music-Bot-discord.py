@@ -88,6 +88,45 @@ async def play(ctx, url: str):
     nname = name.rsplit("-", 2)
     await ctx.send(f"Playing: {nname[0]}")
     print("playing\n")
+    
+    @bot.command(pass_context=True, aliases=['pa', 'pau'])
+async def pause(ctx):
+
+    voice = get(bot.voice_clients, guild=ctx.guild)
+
+    if voice and voice.is_playing():
+        print("Music Paused")
+        voice.pause()
+        await ctx.send("Music Paused")
+    else:
+        print("Music not playing!")
+        await ctx.send("Music not playing, failed to pause")
+
+@bot.command(pass_context=True, aliases=['resm', 'r'])
+async def resume(ctx):
+
+    voice = get(bot.voice_clients, guild=ctx.guild)
+
+    if voice and voice.is_paused():
+        print("Music resumed playing")
+        voice.resume()
+        await ctx.send("Music resumed playing")
+    else:
+        print("Music is already playing!")
+        await ctx.send("Music is already playing **:(**")
+
+@bot.command(pass_context=True, aliases=['s', 'sto'])
+async def stop(ctx):
+
+    voice = get(bot.voice_clients, guild=ctx.guild)
+
+    if voice and voice.is_playing():
+        print("Music stopped")
+        voice.stop()
+        await ctx.send("Music stopped")
+    else:
+        print("Music not playing!")
+        await ctx.send("Music not playing, failed to stop")
 
 # Code After Music ----------------------------------------------------------------------------
 
